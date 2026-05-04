@@ -105,6 +105,81 @@ if __name__ == "__main__":
     main()
 
 
+output :
+
+
+OUTPUT:  
+===== GREEDY ALGORITHMS MENU =====  
+1.	Selection Sort  
+2.	Dijkstra Shortest Path  
+3.	Prim's MST (User Input)  
+4.	Kruskal's MST (User Input)  
+5.	Exit  
+Enter your choice: 1  
+Enter numbers:  2 8 1 9 4  
+Sorted: [1, 2, 4, 8, 9]  
+  
+===== GREEDY ALGORITHMS MENU =====  
+1.	Selection Sort  
+2.	Dijkstra Shortest Path  
+3.	Prim's MST (User Input)  
+4.	Kruskal's MST (User Input)  
+5.	Exit  
+Enter your choice: 2  
+Enter start node (A-E): A  
+Shortest Paths: {'A': 0, 'B': 3, 'C': 1, 'D': 5, 'E': 7}  
+  
+===== GREEDY ALGORITHMS MENU =====  
+1.	Selection Sort  
+2.	Dijkstra Shortest Path  
+3.	Prim's MST (User Input)  
+4.	Kruskal's MST (User Input)  
+5.	Exit  
+Enter your choice: 3  
+Enter number of vertices: 4  
+Enter vertex names: A B C D  
+Enter number of edges: 5  
+Enter edges (u v weight):  
+A B 1  
+A	C 4  
+B	C 2  
+B	D 5  
+C	D 3  
+Enter starting vertex: A  
+  
+Edges selected in MST:  
+A	-- B  (weight = 1)  
+B	-- C  (weight = 2)  
+C	-- D  (weight = 3)  
+  
+Total MST Cost Calculation:  
+Sum of selected edge weights = 6  
+  
+===== GREEDY ALGORITHMS MENU =====  
+1.	Selection Sort  
+2.	Dijkstra Shortest Path  
+3.	Prim's MST (User Input)  
+4.	Kruskal's MST (User Input)  
+5.	Exit  
+Enter your choice: 4  
+Enter number of vertices: 4  
+Enter vertex names: A B C D  
+Enter number of edges: 5  
+Enter edges (u v weight):  
+A C 1  
+A C 4  B C 2  B D 5  
+C D 3  
+MST: [('A', 'C', 1), ('B', 'C', 2), ('C', 'D', 3)]  
+Total Cost: 6  
+  
+===== GREEDY ALGORITHMS MENU =====  
+1.	Selection Sort  
+2.	Dijkstra Shortest Path  
+3.	Prim's MST (User Input)  
+4.	Kruskal's MST (User Input)  
+5.	Exit  Enter your choice: 5  Exiting program... 
+
+
 **********************  Theory *********************************
 
 1. Selection Sort
