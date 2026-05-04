@@ -1,53 +1,66 @@
                                       Aim:-ImplementdepthfirstsearchalgorithmandBreadthFirstSearchalgorithm,Use
                                       anundirectedgraphanddeveloparecursivealgorithmforsearchingalltheverticesof
                                       agraphortreedatastructure.
+code :
+ from collections import deque
+
+class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = {i: [] for i in range(vertices)}
+
+    # Add edge (undirected)
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+        self.graph[v].append(u)
+
+    # -------- DFS (Recursive) --------
+    def dfs_recursive(self, node, visited):
+        visited[node] = True
+        print(node, end=" ")
+
+        for neighbor in self.graph[node]:
+            if not visited[neighbor]:
+                self.dfs_recursive(neighbor, visited)
+
+    # -------- BFS --------
+    def bfs(self, start):
+        visited = [False] * self.V
+        queue = deque()
+
+        visited[start] = True
+        queue.append(start)
+
+        while queue:
+            node = queue.popleft()
+            print(node, end=" ")
+
+            for neighbor in self.graph[node]:
+                if not visited[neighbor]:
+                    visited[neighbor] = True
+                    queue.append(neighbor)
 
 
-                                    Code:
-                                    fromcollectionsimportdeque
-                                    classGraph:
-                                    def__init__(self,vertices):
-                                    self.V=vertices
-                                    self.graph={i:[]foriinrange(vertices)}
-                                    #Addedge(undirected)
-                                    defadd_edge(self,u,v):
-                                    self.graph[u].append(v)
-                                    self.graph[v].append(u)
-                                    #--------DFS(Recursive)--------
-                                    defdfs_recursive(self,node,visited):
-                                    visited[node]=True
-                                    print(node,end="")
-                                    forneighborinself.graph[node]:
-                                    ifnotvisited[neighbor]:
-                                    self.dfs_recursive(neighbor,visited)
-                                    #--------BFS--------
-                                    defbfs(self,start):
-                                    visited=[False]*self.V
-                                    queue=deque()
-                                    visited[start]=True
-                                    queue.append(start)
-                                    whilequeue:
-                                    node=queue.popleft()
-                                    print(node,end="")
-                                    forneighborinself.graph[node]:
-                                    ifnotvisited[neighbor]:
-                                    visited[neighbor]=True
-                                    queue.append(neighbor)
-                                    #--------MainProgram--------
-                                    #Inputnumberofverticesandedges
-                                    v=int(input("Enternumberofvertices:"))
-                                    e=int(input("Enternumberofedges:"))
-                                    g=Graph(v)
-                                    print("Enteredges(uv):")
-                                    for_inrange(e):
-                                    u,v=map(int,input().split())
-                                    g.add_edge(u,v)
-                                    start=int(input("Enterstartingvertex:"))
-                                    print("\nDFSTraversal(Recursive):")
-                                    visited=[False]*g.V
-                                    g.dfs_recursive(start,visited)
-                                    print("\nBFSTraversal:")
-                                    g.bfs(start)
+# -------- Main Program --------
+v = int(input("Enter number of vertices: "))
+e = int(input("Enter number of edges: "))
+
+g = Graph(v)
+
+print("Enter edges (u v):")
+for _ in range(e):
+    u, v1 = map(int, input().split())
+    g.add_edge(u, v1)
+
+start = int(input("Enter starting vertex: "))
+
+print("\nDFS Traversal (Recursive):")
+visited = [False] * g.V
+g.dfs_recursive(start, visited)
+
+print("\nBFS Traversal:")
+g.bfs(start)
+
 Output:
 Enternumberofvertices:4
 Enternumberofedges:3
