@@ -1,0 +1,183 @@
+		                                                  Practical No : 5
+Code:
+import datetime
+
+def greet():
+    print("🤖 ChatBot: Hello! Welcome to Customer Support.")
+    print("🤖 ChatBot: How can I help you today?")
+    print("Type 'exit' to end the chat.\n")
+
+def get_time():
+    now = datetime.datetime.now()
+    return now.strftime("%H:%M:%S")
+
+def chatbot_response(user_input):
+    user_input = user_input.lower()
+
+    # Greetings
+    if "hello" in user_input or "hi" in user_input:
+        return "Hello! How can I assist you today?"
+
+    # Product Inquiry
+    elif "product" in user_input:
+        return "We offer electronics, clothing, and accessories. What are you looking for?"
+
+    # Price Inquiry
+    elif "price" in user_input or "cost" in user_input:
+        return "Prices vary depending on the product. Please specify the item."
+
+    # Order Status
+    elif "order" in user_input and "status" in user_input:
+        return "Please provide your Order ID to check the status."
+
+    # Delivery
+    elif "delivery" in user_input:
+        return "Delivery usually takes 3-5 business days."
+
+    # Return Policy
+    elif "return" in user_input:
+        return "You can return products within 7 days of delivery."
+
+    # Time query
+    elif "time" in user_input:
+        return f"Current time is {get_time()}"
+
+    # Thanks
+    elif "thank" in user_input:
+        return "You're welcome! 😊"
+
+    # Exit
+    elif "exit" in user_input:
+        return "exit"
+
+    # Default
+    else:
+        return "Sorry, I didn't understand that. Can you rephrase?"
+
+def run_chatbot():
+    greet()
+
+    while True:
+        user_input = input("You: ")
+        response = chatbot_response(user_input)
+
+        if response == "exit":
+            print("🤖 ChatBot: Thank you for contacting us. Have a great day!")
+            break
+
+        print("🤖 ChatBot:", response)
+
+# Run the chatbot
+run_chatbot()
+
+
+Output:
+🤖 ChatBot: Hello! Welcome to Customer Support.
+🤖 ChatBot: How can I help you today?
+Type 'exit' to end the chat.
+
+You: hi
+🤖 ChatBot: Hello! How can I assist you today?
+You: what is the cost of cotton 
+🤖 ChatBot: Prices vary depending on the product. Please specify the item.
+You: what is the cost of mobile
+🤖 ChatBot: Prices vary depending on the product. Please specify the item.
+You: when my order is deliver
+🤖 ChatBot: Sorry, I didn't understand that. Can you rephrase?
+You: what is my order status
+🤖 ChatBot: Please provide your Order ID to check the status.
+You: how many days delivery  take
+🤖 ChatBot: Delivery usually takes 3-5 business days.
+You: in how many days we can return      
+🤖 ChatBot: You can return products within 7 days of delivery.
+You: what is current time
+🤖 ChatBot: Current time is 15:02:29
+You: thanks
+🤖 ChatBot: You're welcome! 😊
+You: exit
+🤖 ChatBot: Thank you for contacting us. Have a great day!
+
+
+
+
+
+
+
+Explanation
+This program creates a chatbot that interacts with users and answers common queries.
+
+
+It uses predefined rules (if-elif conditions) to respond.
+
+
+The chatbot checks user input and gives a suitable reply.
+
+
+
+Working
+
+
+The chatbot greets the user.
+
+
+It takes user input continuously.
+
+
+Matches input with keywords like:
+
+
+hello/hi → Greeting
+
+
+product → Product details
+
+
+price/cost → Price info
+
+
+order status → Order tracking
+
+
+delivery → Delivery time
+
+
+return → Return policy
+
+
+time → Shows current time
+
+
+
+
+If input is not matched → shows default message.
+
+
+Chat ends when user types exit.
+
+
+
+Functions Used
+
+
+greet() → displays welcome message
+
+
+chatbot_response() → generates reply
+
+
+get_time() → shows current time
+
+
+run_chatbot() → runs the chatbot loop
+
+
+
+Output
+
+
+Interactive conversation between user and chatbot
+
+
+Responds to different customer queries
+
+
