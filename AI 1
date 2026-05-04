@@ -60,3 +60,38 @@ DFSTraversal(Recursive):
 1023
 BFSTraversal:
 103
+
+
+******************************  THEORY **************************
+
+Explanation
+
+This program performs graph traversal using two methods:
+
+1. Depth First Search (DFS)
+DFS explores the graph deeply first.
+It uses recursion.
+It visits a node, then moves to its unvisited neighbor.
+
+Working:
+
+Start from a given vertex.
+Mark it as visited.
+Recursively visit all unvisited neighbors.
+2. Breadth First Search (BFS)
+BFS explores the graph level by level.
+It uses a queue (FIFO).
+
+Working:
+
+Start from a vertex.
+Mark it visited and add to queue.
+Remove from queue and visit neighbors.
+Repeat until queue is empty.
+Functions Used
+add_edge() → adds edge to graph
+dfs_recursive() → performs DFS
+bfs() → performs BFS
+Output
+Displays DFS traversal (recursive)
+Displays BFS traversal using queue
