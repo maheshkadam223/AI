@@ -1,0 +1,172 @@
+                                                          Assignment No.:6
+Implement any one of the following Expert System I. Information management II. Hospitals and medical facilities III. Help desks management IV. Employee performance evaluation V. Stock market trading VI. Airline scheduling and cargo schedule.
+Information Management:
+Database()
+de f  ad d _  re c o r d (  ) :
+    ke y  = i n pu t (  "E n  te r  re c o r d  n am e :  ") 
+   
+    i f ke y  i n da t a b a s e : 
+        pr i  n t(  "⚠ 	 Re c o r d  al  re a d y  ex i  st s !  Tr y  up d a t i  n g i n st e a d . " )     el  se : 
+        va l  ue  = i n pu t (  "E n  te r  i n f or m a t i  on  : ") 
+        da t a b a s e [ k e y ]  = va l  ue 
+        pr i  n t(  "✅ 	 Re c o r d  ad d e d  su c c e s s f  ul  l y. " ) 
+de f  vi  ew _  re c o r d s (  ) :
+    i f n ot  da t a b a s e : 
+        pr i  n t(  "📂  No  re c o r d s  f ou n  d. " )     el  se : 
+        pr i  n t(  "\ n  St o r e d  Re c o r d s :  ") 
+        f or  ke y ,  va l  ue  i n da t a b a s e . i  te m s (  ) :
+            pr i  n t(  f "{ k e y }  ->  {v a l  ue } " ) 
+de f  se a r c h _  re c o r d (  ) :
+    ke y  = i n pu t (  "E n  te r  re c o r d  n am e  to  se a r c h :  ") 
+   
+    i f ke y  i n da t a b a s e : 
+        pr i  n t(  f "🔍 	 Fo u n  d:  {k e y }  ->  {d a t a b a s e [ k e y ] } " ) 
+        pr i  n t(  "S u g g e s t i  on  : Yo u  ca n  up d a t e  or  de l  et e  th i  s re c o r d . " )     el  se : 
+        pr i  n t(  "❌ 	 Re c o r d  n ot  f ou n  d. " ) 
+        pr i  n t(  "S u g g e s t i  on  : Yo u  ma y  ad d  th i  s re c o r d . " ) 
+de f  de l  et e _  re c o r d (  ) :
+    ke y  = i n pu t (  "E n  te r  re c o r d  n am e  to  de l  et e :  ") 
+  
+  if key in database:
+    del database[key]
+    print("🗑 Record deleted successfully.")   else:
+    print("❌Record not found.")
+def menu():   while True:
+    print("\n--- Information Management Expert System ---")
+    print("1. Add Record")
+    print("2. View Records")
+    print("3. Search Record")
+    print("4. Delete Record")
+    print("5. Exit")
+    
+    choice = input("Enter your choice: ")
+    if choice == "1":
+      add_record()
+    elif choice == "2":
+      view_records()
+    elif choice == "3":       search_record()     elif choice == "4":       delete_record()     elif choice == "5":
+      print("Exiting system...")       break     else:
+      print("Invalid choice! Try again.")
+# Run system menu():
+Output:
+--- Information Management Expert System ---
+1.	Add Record
+2.	View Records
+3.	Search Record
+4.	Delete Record 5. Exit
+Enter your choice: 1
+Enter record name: Student 1
+Enter information: sam ,age 20 ✅Record added successfully.
+--- Information Management Expert System ---
+1.	Add Record
+2.	View Records
+3.	Search Record
+4.	Delete Record
+5.	Exit Enter your choice: 2
+Stored Records:
+Student 1 -> sam ,age 20
+--- Information Management Expert System ---
+1.	Add Record
+2.	View Records
+3.	Search Record
+4.	Delete Record
+5.	Exit
+Enter your choice: 3
+Enter record name to search: Student 1
+🔍Found: Student 1 -> sam ,age 20
+Suggestion: You can update or delete this record.
+--- Information Management Expert System ---
+1.	Add Record
+2.	View Records
+3.	Search Record
+4.	Delete Record
+5.	Exit
+Enter your choice: 4 Enter record name to delete: Student 1 🗑 Record deleted successfully.
+--- Information Management Expert System ---
+1.	Add Record
+2.	View Records
+3.	Search Record
+4.	Delete Record
+5.	Exit
+Enter your choice: 2
+📂No records found.
+--- Information Management Expert System ---
+1.	Add Record
+2.	View Records
+3.	Search Record
+4.	Delete Record
+5.	Exit Enter your choice: 5 Exiting system...
+
+
+
+*********************theory*********************
+
+Explanation
+This program acts as a simple information management expert system that stores and manages records.
+
+
+It uses a dictionary (database) to store data in the form of key-value pairs.
+
+
+It provides suggestions like an expert system based on user actions.
+
+
+
+Working
+
+
+User selects options from menu.
+
+
+System performs operations like:
+
+
+Add Record → stores new data
+
+
+View Records → displays all records
+
+
+Search Record → finds specific record and gives suggestion
+
+
+Delete Record → removes record
+
+
+
+
+System continues until user selects Exit.
+
+
+
+Functions Used
+
+
+add_record() → adds new record
+
+
+view_records() → displays all records
+
+
+search_record() → searches record
+
+
+delete_record() → deletes record
+
+
+menu() → controls program flow
+
+
+
+Output
+
+
+Displays stored records
+
+
+Shows search results with suggestions
+
+
+Performs add/delete operations successfully
+
+
