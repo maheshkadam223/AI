@@ -125,3 +125,27 @@ Initial State:
 (4, 5, 6)
 (7, 8, 0)
 
+******************8THeory 8*******************
+Explanation
+
+The 8-puzzle problem is a sliding puzzle where we arrange tiles to reach the goal state.
+
+It uses A* algorithm, which is an informed search technique.
+It finds the optimal (shortest) path to reach the goal.
+Working
+Start with an initial puzzle state.
+Generate possible moves (up, down, left, right).
+Use heuristic (Manhattan distance) to estimate cost.
+Select the node with the lowest f(n) = g(n) + h(n):
+g(n) → cost from start
+h(n) → estimated cost to goal
+Repeat until goal state is reached.
+Functions Used
+heuristic() → calculates Manhattan distance
+get_neighbors() → generates next possible states
+astar() → implements A* algorithm
+print_state() → displays puzzle
+Output
+Displays initial state
+Shows step-by-step moves
+Finds solution with minimum moves
