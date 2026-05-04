@@ -5,156 +5,89 @@ Aim:Implement a solution for constraints satisfaction problem using branch and b
 
 Code:
 
-import tkinter as tk
-import time
-#import threading-
+# Graph Coloring - Simple Version (No GUI)
+
 def input_graph():
     n = int(input("Enter number of vertices: "))
     print("Enter adjacency matrix:")
     graph = []
-    for i in range(n):
-        row = list(map(int, input().split()))
-        graph.append(row)
+    for _ in range(n):
+        graph.append(list(map(int, input().split())))
     return graph, n
 
-def is_safe(v, graph, color, c, n):
-    for i in range(n):
+def is_safe(v, graph, color, c):
+    for i in range(len(graph)):
         if graph[v][i] == 1 and color[i] == c:
             return False
     return True
-def graph_coloring_bt(graph, m, color, v, n, steps):
-    if v == n:
+
+# Backtracking
+def graph_coloring_bt(graph, m, color, v):
+    if v == len(graph):
         return True
+
     for c in range(1, m + 1):
-        steps.append(f"Trying color {c} for vertex {v}")
-        if is_safe(v, graph, color, c, n):
+        if is_safe(v, graph, color, c):
             color[v] = c
-            steps.append(f"Assigned color {c} to vertex {v}")
-
-            if graph_coloring_bt(graph, m, color, v + 1, n, steps):
+            if graph_coloring_bt(graph, m, color, v + 1):
                 return True
-
             color[v] = 0
-            steps.append(f"Backtracking from vertex {v}")
+
     return False
-def graph_coloring_bb(graph, m, n):
-    color = [0] * n
-    steps = []
+
+# Branch & Bound (same logic, simplified)
+def graph_coloring_bb(graph, m):
+    color = [0] * len(graph)
 
     def solve(v):
-        if v == n:
+        if v == len(graph):
             return True
 
         for c in range(1, m + 1):
-            if is_safe(v, graph, color, c, n):
+            if is_safe(v, graph, color, c):
                 color[v] = c
-                steps.append(f"[B&B] Assign color {c} to vertex {v}")
                 if solve(v + 1):
                     return True
                 color[v] = 0
-                steps.append(f"[B&B] Backtrack vertex {v}")
-return False
+
+        return False
+
     if solve(0):
-        return color, steps
-    return None, steps
+        return color
+    return None
 
+# Print result
 def print_solution(color):
-    print("\nVertex : Color")
+    print("Vertex -> Color")
     for i in range(len(color)):
-        print(f"{i} -> {color[i]}")
+        print(i, "->", color[i])
 
-def show_steps(steps):
-    print("\n--- Step-by-Step Trace ---")
-    for step in steps:
-        print(step)
-        time.sleep(0.3)
-
-def visualize_graph_coloring(graph, colors):
-    import tkinter as tk
-
-    n = len(graph)
-    root = tk.Tk()
-    root.title("Graph Coloring Visualization")
-    canvas = tk.Canvas(root, width=500, height=500)
-    canvas.pack()
-    positions = [
-        (250, 50), (400, 150), (400, 350),
-        (250, 450), (100, 350), (100, 150)
-    ]
-    node_color_map = ["white", "red", "green", "blue", "yellow", "cyan"]
-
-    # Draw edges
-    for i in range(n):
-        for j in range(n):
-            if graph[i][j] == 1:
-                x1, y1 = positions[i]
-                x2, y2 = positions[j]
-                canvas.create_line(x1, y1, x2, y2)
-
-    nodes = []
-    # Draw nodes
-    for i in range(n):
-        x, y = positions[i]
-        node = canvas.create_oval(x-20, y-20, x+20, y+20, fill="white")
-        canvas.create_text(x, y, text=str(i))
-        nodes.append(node)
-    # ✅ SAFE animation using after()
-    def animate(i=0):
-        if i < n:
-            canvas.itemconfig(nodes[i], fill=node_color_map[colors[i]])
-            root.after(800, animate, i + 1)
-
-    animate()
-    root.mainloop()
-
+# Main
 def main():
-    while True:
-        print("\n==== GRAPH COLORING MENU ====")
-        print("1. Backtracking")
-        print("2. Branch and Bound")
-        print("3. Exit")
+    graph, n = input_graph()
+    m = int(input("Enter number of colors: "))
 
-        choice = int(input("Enter choice: "))
+    print("\n1. Backtracking\n2. Branch & Bound")
+    choice = int(input("Enter choice: "))
 
-        if choice == 3:
-            break
+    if choice == 1:
+        color = [0] * n
+        if graph_coloring_bt(graph, m, color, 0):
+            print("\nSolution (Backtracking):")
+            print_solution(color)
+        else:
+            print("No solution")
 
-        graph, n = input_graph()
-        m = int(input("Enter number of colors: "))
+    elif choice == 2:
+        color = graph_coloring_bb(graph, m)
+        if color:
+            print("\nSolution (Branch & Bound):")
+            print_solution(color)
+        else:
+            print("No solution")
 
-        if choice == 1:
-            color = [0] * n
-            steps = []
-
-            if graph_coloring_bt(graph, m, color, 0, n, steps):
-                print("\nSolution using Backtracking:")
-                print_solution(color)
-                show_steps(steps)
-                vis = input("Show GUI visualization? (y/n): ")
-                if vis.lower() == 'y':
-                    visualize_graph_coloring(graph, color)
-            else:
-                print("No solution exists")
-
-        elif choice == 2:
-            color, steps = graph_coloring_bb(graph, m, n)
-            if color:
-                print("\nSolution using Branch & Bound:")
-                print_solution(color)
-                show_steps(steps)
-
-                vis = input("Show GUI visualization? (y/n): ")
-                if vis.lower() == 'y':
-                    visualize_graph_coloring(graph, color)
-            else:
-                print("No solution exists")
-
-# -------------------------------
-# RUN PROGRAM
-# -------------------------------
 if __name__ == "__main__":
     main()
-
 
 
 OUTPUT:
