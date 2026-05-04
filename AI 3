@@ -1,0 +1,198 @@
+
+
+                                                          ASSIGNMENT 3
+
+
+
+
+
+import heapq
+
+# 1. Selection Sort (Greedy: Pick the smallest element in each step)
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr
+
+# 2. Dijkstra's Shortest Path
+def dijkstra(graph, start):
+    dist = {node: float('inf') for node in graph}
+    dist[start] = 0
+    pq = [(0, start)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]: continue
+        for v, weight in graph[u]:
+            if dist[v] > d + weight:
+                dist[v] = d + weight
+                heapq.heappush(pq, (dist[v], v))
+    return dist
+
+# 3. Prim’s MST (User Input)
+def prim():
+    n = int(input("Enter number of vertices: "))
+    vertices = input("Enter vertex names: ").split()
+    graph = {v: [] for v in vertices}
+    e = int(input("Enter number of edges: "))
+    print("Enter edges (u v weight):")
+    for _ in range(e):
+        u, v, w = input().split()
+        graph[u].append((v, int(w)))
+        graph[v].append((u, int(w)))
+    
+    start = input("Enter starting vertex: ")
+    visited, min_heap = set(), [(0, start, None)]
+    total_cost = 0
+    print("\nEdges selected in MST:")
+    while min_heap:
+        w, u, parent = heapq.heappop(min_heap)
+        if u not in visited:
+            visited.add(u)
+            total_cost += w
+            if parent: print(f"{parent} -- {u} (weight = {w})")
+            for v, weight in graph[u]:
+                if v not in visited: heapq.heappush(min_heap, (weight, v, u))
+    print(f"Total MST Cost: {total_cost}")
+
+# 4. Kruskal’s MST (Using Union-Find)
+def find(parent, i):
+    if parent[i] == i: return i
+    parent[i] = find(parent, parent[i])
+    return parent[i]
+
+def kruskal():
+    vertices = input("Enter vertex names: ").split()
+    e = int(input("Enter number of edges: "))
+    edges = []
+    for _ in range(e):
+        u, v, w = input().split()
+        edges.append((u, v, int(w)))
+    
+    edges.sort(key=lambda x: x[2]) # Greedy Step: Sort edges by weight
+    parent = {v: v for v in vertices}
+    mst, total_cost = [], 0
+    
+    for u, v, w in edges:
+        root_u, root_v = find(parent, u), find(parent, v)
+        if root_u != root_v:
+            parent[root_u] = root_v
+            mst.append((u, v, w))
+            total_cost += w
+    print(f"MST: {mst}\nTotal Cost: {total_cost}")
+
+def main():
+    while True:
+        print("\n--- GREEDY ALGORITHMS MENU ---")
+        print("1. Selection Sort\n2. Dijkstra\n3. Prim's MST\n4. Kruskal's MST\n5. Exit")
+        choice = input("Enter choice: ")
+        if choice == '1':
+            arr = list(map(int, input("Enter numbers: ").split()))
+            print("Sorted:", selection_sort(arr))
+        elif choice == '2':
+            g = {'A': [('B',4), ('C',1)], 'B': [('E',4)], 'C': [('B',2), ('D',4)], 'D': [('E',4)], 'E': []}
+            print("Shortest Paths from A:", dijkstra(g, 'A'))
+        elif choice == '3': prim()
+        elif choice == '4': kruskal()
+        elif choice == '5': break
+        else: print("Invalid Choice!")
+
+if __name__ == "__main__":
+    main()
+
+
+**********************  Theory *********************************
+
+1. Selection Sort
+
+Selection Sort is a simple sorting technique based on the greedy approach.
+
+It repeatedly selects the smallest element from the unsorted part of the list.
+Then it places that element at the beginning.
+This process continues until the entire array is sorted.
+
+Working:
+
+Start from the first element.
+Find the minimum element in the remaining array.
+Swap it with the current element.
+Repeat for all elements.
+
+Time Complexity: O(n²)
+
+2. Dijkstra’s Shortest Path Algorithm
+
+Dijkstra’s algorithm is used to find the shortest path from a starting node to all other nodes in a graph.
+
+It works only for graphs with non-negative weights.
+It uses a priority queue (min-heap) to always pick the node with the smallest distance.
+
+Working:
+
+Initialize all distances as infinity.
+Set the starting node distance to 0.
+Pick the node with the smallest distance.
+Update distances of its neighbors.
+Repeat until all nodes are visited.
+
+Output: Shortest distance from source node to all other nodes.
+
+3. Prim’s Minimum Spanning Tree (MST)
+
+Prim’s algorithm is used to find the Minimum Spanning Tree of a graph.
+
+It starts from any vertex and grows the MST step by step.
+It always selects the minimum weight edge connecting to a new vertex.
+
+Working:
+
+Start from a given vertex.
+Add the smallest edge that connects to an unvisited vertex.
+Mark the vertex as visited.
+Repeat until all vertices are included.
+
+Output: List of edges in MST and total cost.
+
+4. Kruskal’s Minimum Spanning Tree (MST)
+
+Kruskal’s algorithm also finds the MST using a greedy approach.
+
+It selects edges in increasing order of weight.
+It avoids cycles using Union-Find (Disjoint Set).
+
+Working:
+
+Sort all edges by weight.
+Pick the smallest edge.
+Check if it forms a cycle:
+If NO → include it in MST.
+If YES → discard it.
+Repeat until MST is formed.
+
+Output: MST edges and total cost.
+
+5. Main Function
+Provides a menu-driven program.
+User can choose:
+Selection Sort
+Dijkstra
+Prim’s MST
+Kruskal’s MST
+Exit
+Executes the selected algorithm based on user input.
+
+
+
+
+
+
+
+
+
+
+
+
