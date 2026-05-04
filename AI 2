@@ -3,109 +3,98 @@ Code:
 
 
 import heapq
+
 # Goal State
 GOAL_STATE = ((1, 2, 3),
               (4, 5, 6),
               (7, 8, 0))
+
 # Moves: Up, Down, Left, Right
 MOVES = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
 class Node:
-    def __init__(self, state, parent=None):
+    def __init__(self, state, parent=None, cost=0):
         self.state = state
         self.parent = parent
-        self.g = 0  # Cost from start
-        self.h = 0  # Heuristic cost
-        self.f = 0  # Total cost
- def __lt__(self, other):
-        return self.f < other.f
-# Manhattan Distance Heuristic
-def heuristic(state):
-    distance = 0
-    for i in range(3):
-        for j in range(3):
-            value = state[i][j]
-            if value != 0:
-                goal_x = (value - 1) // 3
-                goal_y = (value - 1) % 3
-                distance += abs(i - goal_x) + abs(j - goal_y)
-    return distance
-# Find blank (0) position
-def find_blank(state):
+        self.cost = cost
+
+    def __lt__(self, other):
+        return self.cost < other.cost  # needed for heapq
+
+# Find zero position
+def find_zero(state):
     for i in range(3):
         for j in range(3):
             if state[i][j] == 0:
                 return i, j
 
-# Generate neighbor states
+# Generate neighbors
 def get_neighbors(state):
     neighbors = []
-    x, y = find_blank(state)
+    x, y = find_zero(state)
 
     for dx, dy in MOVES:
         nx, ny = x + dx, y + dy
-
         if 0 <= nx < 3 and 0 <= ny < 3:
             new_state = [list(row) for row in state]
-            # Swap blank with neighbor
             new_state[x][y], new_state[nx][ny] = new_state[nx][ny], new_state[x][y]
             neighbors.append(tuple(tuple(row) for row in new_state))
+
     return neighbors
-# A* Algorithm
-def astar(start_state):
-    open_list = []
-    closed_set = set()
-    start_node = Node(start_state)
-    start_node.h = heuristic(start_state)
-    start_node.f = start_node.h
 
-    heapq.heappush(open_list, start_node)
-    while open_list:
-        current = heapq.heappop(open_list)
+# Simple heuristic (misplaced tiles)
+def heuristic(state):
+    return sum(
+        1 for i in range(3) for j in range(3)
+        if state[i][j] != 0 and state[i][j] != GOAL_STATE[i][j]
+    )
+
+# Greedy Best First Search
+def greedy(start):
+    visited = set()
+    pq = []
+
+    start_node = Node(start, None, heuristic(start))
+    heapq.heappush(pq, start_node)
+
+    while pq:
+        current = heapq.heappop(pq)
+
         if current.state == GOAL_STATE:
-            path = []
-            while current:
-                path.append(current.state)
-                current = current.parent
-            return path[::-1]
+            return current
 
-        closed_set.add(current.state)
-        for neighbor_state in get_neighbors(current.state):
-            if neighbor_state in closed_set:
-                continue
-            neighbor = Node(neighbor_state, current)
-            neighbor.g = current.g + 1
-            neighbor.h = heuristic(neighbor_state)
-            neighbor.f = neighbor.g + neighbor.h
-            # Check if a better path already exists
-            skip = False
-            for open_node in open_list:
-                if neighbor.state == open_node.state and neighbor.g >= open_node.g:
-                    skip = True
-                    break
-            if not skip:
-                heapq.heappush(open_list, neighbor)
+        visited.add(current.state)
+
+        for neighbor in get_neighbors(current.state):
+            if neighbor not in visited:
+                heapq.heappush(pq, Node(neighbor, current, heuristic(neighbor)))
+
     return None
-# Print puzzle nicely
-def print_state(state):
-    for row in state:
-        print(row)
-    print()
-# MAIN FUNCTION (RUNS DIRECTLY IN VS CODE )if __name__ == "__main__":
 
-    # Change this input if needed
-    start_state = ((1, 2, 3),
-                   (4, 0, 6),
-                   (7, 5, 8))
+# Print path
+def print_path(node):
+    path = []
+    while node:
+        path.append(node.state)
+        node = node.parent
 
-    print("Initial State:")
-    print_state(start_state)
-    solution = astar(start_state)
-    if solution:
-        print("✅ Solution found in", len(solution) - 1, "moves:\n")
-        for step in solution:
-            print_state(step)
-    else:
-        print("❌ No solution exists")
+    for step in reversed(path):
+        for row in step:
+            print(row)
+        print()
+
+# Example start state
+start_state = ((1, 2, 3),
+               (4, 0, 6),
+               (7, 5, 8))
+
+result = greedy(start_state)
+
+if result:
+    print("Solution found:\n")
+    print_path(result)
+else:
+    print("No solution found")
 
 Output: 
 Initial State:
